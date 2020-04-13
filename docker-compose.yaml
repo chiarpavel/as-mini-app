@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  app:
+    image: cristianpaveldev/as-mini-app:1.0.0
+    container_name: app_server
+    restart: always
+    environment:
+    - MONGO_URI=mongodb://database:27017/astest
+    - PORT=3010
+    # this should be set outside of this file
+    - SECRET=as_test_secret
+    ports:
+    - "3010:3010"
+    depends_on:
+    - mongo
+
+  mongo:
+    image: mongo:4.2.5-bionic
+    container_name: database
+    restart: always
+    environment:
+    - MONGO_INITDB_DATABASE=astest
+    ports:
+    - "27017:27017"
